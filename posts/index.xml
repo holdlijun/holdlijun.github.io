@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Ipoo</title>
+    <link>https://www.ipooli.com/posts/</link>
+    <description>Recent content in Posts on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 02 Sep 2020 17:40:40 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java虚拟机垃圾回收-对象是否已死</title>
+      <link>https://www.ipooli.com/2020/09/object-dead/</link>
+      <pubDate>Wed, 02 Sep 2020 17:40:40 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/09/object-dead/</guid>
+      <description>如何判断对象是否已死 在堆里存放着几乎所有的对象实例，垃圾收集器在堆进行回收前，要判断对象是否还存活着。 Java堆是虚拟机所管理的内存中最大的</description>
+    </item>
+    
+    <item>
+      <title>Java List和Map遍历的方法,forEach()的使用</title>
+      <link>https://www.ipooli.com/2020/07/iterate/</link>
+      <pubDate>Wed, 15 Jul 2020 16:49:16 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/07/iterate/</guid>
+      <description>注意: 不要在foreach循环里进行元素的remove/add操作。remove元素请使用Iterator方式，如果并发操作，需要对Iter</description>
+    </item>
+    
+    <item>
+      <title>Flink 集群搭建,Standalone,集群部署,HA高可用部署</title>
+      <link>https://www.ipooli.com/2020/06/flink-deploy/</link>
+      <pubDate>Mon, 22 Jun 2020 16:50:46 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/flink-deploy/</guid>
+      <description>基础环境 准备3台虚拟机 配置无密码登录 下载Flink 部署 Standalone Cluster 单机模式 启动 集群模式 修改配置文件 拷贝到其他两台机器 启动集群 HA高可用模式 下载had</description>
+    </item>
+    
+    <item>
+      <title>Flink Table Api &amp; SQL 初体验,Blink的使用</title>
+      <link>https://www.ipooli.com/2020/06/flink-table/</link>
+      <pubDate>Sat, 20 Jun 2020 11:18:11 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/flink-table/</guid>
+      <description>概述 使用 pom依赖 模拟一个实时流 主程序 结果打印 总结 概述 Flink具有Table API和SQL-用于统一流和批处理。 Table API是用于Scala和</description>
+    </item>
+    
+    <item>
+      <title>Flink 如何分流数据</title>
+      <link>https://www.ipooli.com/2020/06/output/</link>
+      <pubDate>Thu, 11 Jun 2020 17:16:05 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/output/</guid>
+      <description>场景 分流方式 如何分流 使用Filter分流 使用Split分流 使用Side Output分流 场景 获取流数据的时候,通常需要根据所需把流拆分出其他多</description>
+    </item>
+    
+    <item>
+      <title>Flink DataStream中min(),minBy(),max(),max()之间的区别</title>
+      <link>https://www.ipooli.com/2020/06/minother/</link>
+      <pubDate>Wed, 10 Jun 2020 11:31:25 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/minother/</guid>
+      <description>解释 官方文档中: The difference between min and minBy is that min returns the minimum value, whereas minBy returns the element that has the minimum value in this field (same for max and maxBy). 翻译: min和minBy之间的区别是min返回最小值，而min</description>
+    </item>
+    
+    <item>
+      <title>图片,视频素材整理</title>
+      <link>https://www.ipooli.com/2020/06/sheji/</link>
+      <pubDate>Tue, 02 Jun 2020 15:57:10 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/sheji/</guid>
+      <description>高清视频 pexels:无版权免费素材,支持中文。 Mixkit :免费视频网站 Vidlery:专注动画视频 Ignite Motion:影片素材 Pixabay: 免注册直接下载 Vids</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes 是什么</title>
+      <link>https://www.ipooli.com/2020/06/k8s-what/</link>
+      <pubDate>Tue, 02 Jun 2020 12:04:52 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/k8s-what/</guid>
+      <description>Kubernetes 是什么 分别解释下 k8s 的几个关键字 生产级别 容器 编排系统 k8s 架构概览 Master 组件 Node 组件 概念 计算资源 网络通信 工作模型 ReplicaSet DaemonSet Job CronJob StatefulSets 更新部署 数据持久化 Persistent Volumes Persistent Volumes Claim</description>
+    </item>
+    
+    <item>
+      <title>Linux关闭防火墙 Centos7如何关闭防火墙</title>
+      <link>https://www.ipooli.com/2020/05/turn-fire/</link>
+      <pubDate>Thu, 28 May 2020 17:36:37 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/05/turn-fire/</guid>
+      <description>查看防火墙状态 systemctl status firewalld centos7：service iptables status 即使生效，临时关闭 systemctl stop firewalld service iptables stop 永久关闭防火墙 chkconfig iptables off centos7：systemctl disable</description>
+    </item>
+    
+    <item>
+      <title>java中GC垃圾回收机制,如何查看GC日志</title>
+      <link>https://www.ipooli.com/2020/05/javagccheck/</link>
+      <pubDate>Thu, 21 May 2020 15:22:39 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/05/javagccheck/</guid>
+      <description>idea 打印gc日志 添加程序运行启动参数: -XX:+PrintGCDetails 显式调用时，触发FGC: System.gc(); 命令行编译 java -verbose:gc Test 服务启动参数 -XX:+PrintGCTimeStamps -XX:+PrintGCDetails -verbose:gc -Xloggc:/home/admin/logs/gc-risk.log #gc日志输出路径 gc触发条件 YGC是什</description>
+    </item>
+    
+    <item>
+      <title>被删库&#39;勒索&#39;警醒事件</title>
+      <link>https://www.ipooli.com/2020/04/rm-mongo/</link>
+      <pubDate>Mon, 27 Apr 2020 15:08:00 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/rm-mongo/</guid>
+      <description>因为需要,去访问数据库获取数据的时候,才发现数据库的表全没了！！ 去服务器上查找问题,发现服务还是正常的,没什么异常。 数据库缺莫名多了个库 READ_ME_TO_RECOVER_YOUR_DATA 库</description>
+    </item>
+    
+    <item>
+      <title>kafka能做什么？kafka集群配置 (卡夫卡 大数据)</title>
+      <link>https://www.ipooli.com/2020/04/learn-kafka/</link>
+      <pubDate>Sat, 25 Apr 2020 13:28:12 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/learn-kafka/</guid>
+      <description>什么是Kafka 官网介绍： 几个概念： 详细介绍 ： 操作kafka： kafka集群 消息测试 问题检测 什么是Kafka 官网介绍： ApacheKafka</description>
+    </item>
+    
+    <item>
+      <title>Linux 集群免密登录配置,双向免密</title>
+      <link>https://www.ipooli.com/2020/04/linux_host/</link>
+      <pubDate>Sat, 25 Apr 2020 11:18:55 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/linux_host/</guid>
+      <description>linux 集群免密登录配置 第一种方法 第二种方法 linux 集群免密登录配置 第一种方法 我这边准备三台主机 分别为bigdata1,bigdata2,bigdata</description>
+    </item>
+    
+    <item>
+      <title>https绕过证书认证请求 Get或Post请求（证书过期，忽略证书）</title>
+      <link>https://www.ipooli.com/2020/04/bypass_ssl/</link>
+      <pubDate>Mon, 13 Apr 2020 14:46:09 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/bypass_ssl/</guid>
+      <description>报错信息 解决： postman方式 java请求 报错信息 javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target 如果证书过期，配置容器为</description>
+    </item>
+    
+    <item>
+      <title>京东X芬香邀请码</title>
+      <link>https://www.ipooli.com/2020/04/fenxiang/</link>
+      <pubDate>Fri, 10 Apr 2020 11:00:04 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/fenxiang/</guid>
+      <description>京东芬香介绍,邀请码获得 2YREEA 芬香取意“分享”，寓意&amp;lt;“芬”享好货，手有余香&amp;gt;。 人人均可免费注册芬香社交电商小程序成为会员，成为注册</description>
+    </item>
+    
+    <item>
+      <title>Idea 2020最新激活码</title>
+      <link>https://www.ipooli.com/2020/03/idea-activating/</link>
+      <pubDate>Sat, 21 Mar 2020 19:10:40 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/03/idea-activating/</guid>
+      <description>2020最新版 可用的激活码 2019旧版 可用的激活码 2020最新版 可用的激活码 整段复制 QYYBAC9D3J-eyJsaWNlbnNlSWQiOiJRWVlCQUM5RDNKIiwibGljZW5zZWVOYW1lIjoi6LaF57qnIOeoi+W6j+WRmCIsImFzc2lnbmVlTmFtZSI6IiIsImFzc2lnbmVlRW1haWwiOiIiLCJsaWNlbnNlUmVzdHJpY3Rpb24iOiIiLCJjaGVja0NvbmN1cnJlbnRVc2UiOmZhbHNlLCJwcm9kdWN0cyI6W3siY29kZSI6IklJIiwiZmFsbGJhY2tEYXRlIjoiMjAyMC0wMS0wNCIsInBhaWRVcFRvIjoiMjAyMS0wMS0wMyJ9LHsiY29kZSI6IkFDIiwiZmFsbGJhY2tEYXRlIjoiMjAyMC0wMS0wNCIsInBhaWRVcFRvIjoiMjAyMS0wMS0wMyJ9LHsiY29kZSI6IkRQTiIsImZhbGxiYWNrRGF0ZSI6IjIwMjAtMDEtMDQiLCJwYWlkVXBUbyI6IjIwMjEtMDEtMDMifSx7ImNvZGUiOiJQUyIsImZhbGxiYWNrRGF0ZSI6IjIwMjAtMDEtMDQiLCJwYWlkVXBUbyI6IjIwMjEtMDEtMDMifSx7ImNvZGUiOiJHTyIsImZhbGxiYWNrRGF0ZSI6IjIwMjAtMDEtMDQiLCJwYWlkVXBUbyI6IjIwMjEtMDEtMDMifSx7ImNvZGUiOiJETSIsImZhbGxiYWNrRGF0ZSI6IjIwMjAtMDEtMDQiLCJwYWlkVXBUbyI6IjIwMjEtMDEtMDMifSx7ImNvZGUiOiJDTCIsImZhbGxiYWNrRGF0ZSI6IjIwMjAtMDEtMDQiLCJwYWlkVXBUbyI6IjIwMjEtMDEtMDMifSx7ImNvZGUiOiJSUzAiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiUkMiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiUkQiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiUEMiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiUk0iLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiV1MiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiREIiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiREMiLCJmYWxsYmFja0RhdGUiOiIyMDIwLTAxLTA0IiwicGFpZFVwVG8iOiIyMDIxLTAxLTAzIn0seyJjb2RlIjoiUlNVIiwiZmFsbGJhY2tEYXRlIjoiMjAyMC0wMS0wNCIsInBhaWRVcFRvIjoiMjAyMS0wMS0wMyJ9XSwiaGFzaCI6IjE2MDgwOTA5LzAiLCJncmFjZVBlcmlvZERheXMiOjcsImF1dG9Qcm9sb25nYXRlZCI6ZmFsc2UsImlzQXV0b1Byb2xvbmdhdGVkIjpmYWxzZX0=-I7c5mu4hUCMxcldrwZEJMaT+qkrzrF1bjJi0i5QHcrRxk2LO0jqzUe2fBOUR4L+x+7n6kCwAoBBODm9wXst8dWLXdq179EtjU3rfJENr1wXGgtef//FNow+Id5iRufJ4W+p+3s5959GSFibl35YtbELELuCUH2IbCRly0PUBjitgA0r2y+9jV5YD/dmrd/p4C87MccC74NxtQfRdeUEGx87vnhsqTFH/sP4C2VljSo/F/Ft9JqsSlGfwSKjzU8BreYt1QleosdMnMK7a+fkfxh7n5zg4DskdVlNbfe6jvYgMVE16DMXd6F1Zhwq+lrmewJA2jPToc+H5304rcJfa9w==-MIIElTCCAn2gAwIBAgIBCTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE4MTEwMT 2019旧版 可用的激活码 整段复制 MNQ043JMTU-eyJsaWNlbnNlSWQiOiJNTlEwNDNKTVRVIiwibGljZW5zZWVOYW1lIjoiR1VPIEJJTiIsImFzc2lnbmVlTmFtZSI6IiIsImFzc2lnbmVlRW1haWwiOiIiLCJsaWNlbnNlUmVzdHJpY3Rpb24iOiIiLCJjaGVja0NvbmN1cnJlbnRVc2UiOmZhbHNlLCJwcm9kdWN0cyI6W3siY29kZSI6IklJIiwiZmFsbGJhY2tEYXRlIjoiMjAxOS0wNC0wNSIsInBhaWRVcFRvIjoiMjAyMC0wNC0wNCJ9XSwiaGFzaCI6IjEyNjIxNDIwLzBwIiwiZ3JhY2VQZXJpb2REYXlzIjo3LCJhdXRvUHJvbG9uZ2F0ZWQiOnRydWUsImlzQXV0b1Byb2xvbmdhdGVkIjp0cnVlfQ==-Zmbxcn7NPlqBNqAURX0uiLzybnruyx6PG+6KYZrpzm/IJJs5nnIogGgdfIJoifO6fbaaJYc5pjds7CHdrt/neIpvF2o/HvIjMEF4/AhNV7HUGsAa9zpMszc6YBIkMmVFh4Y7GPKOStA14/Ld83AC7kGnwL1Fq7eAXKJFljc00GMejPpfE0zDqTN634bC+0ojfklhWXaLqhUt230SiE8onnd3quvEaH5NsW7sIQm2spyONZI+iHvHFtl4EvG7tlRlD1StsfhrbgNNxz61FOEEQ+GtZIzMx+T4sbpfoRyms7lbWQecrbAtE0c2sR98esm4PcDUhrFVBxGorPC1ppOLSQ==-MIIElTCCAn2gAwIBAgIBCTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE4MTEwMTE 来自Win7系统之家</description>
+    </item>
+    
+    <item>
+      <title>Markdown 基础语法与进阶使用</title>
+      <link>https://www.ipooli.com/2020/03/learn-md/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/03/learn-md/</guid>
+      <description>标题 段落 换行符 文本 插入图片 引用区块 列表 代码块 代码块中语法高亮 链接 网址和电子邮件地址 转义字符 Markdown使用表情符号 标题 Markdown语</description>
+    </item>
+    
+  </channel>
+</rss>

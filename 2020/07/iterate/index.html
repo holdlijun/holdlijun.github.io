@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" Java List和Map遍历的方法，forEach()的使用"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/06/flink-deploy/" />
+  <link rel="next" href="https://www.ipooli.com/2020/09/object-dead/" />
+  <link rel="canonical" href="https://www.ipooli.com/2020/07/iterate/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Java List和Map遍历的方法,forEach()的使用 | Ipoo
+       
+  </title>
+  <meta name="title" content="Java List和Map遍历的方法,forEach()的使用 | Ipoo">
+  <meta name="keyword" content=" Java,集合,集合遍历,List遍历,Map遍历"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java List和Map遍历的方法,forEach()的使用"/>
+<meta name="twitter:description" content="Java List和Map遍历的方法，forEach()的使用"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Java List和Map遍历的方法,forEach()的使用",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/07\/iterate\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "Java",
+  "wordcount":  433 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/07\/iterate\/",
+  "datePublished": "2020-07-15T16:49:16\x2b08:00",
+  "dateModified": "2020-07-15T16:49:16\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "Java List和Map遍历的方法，forEach()的使用"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">Java List和Map遍历的方法,forEach()的使用</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=15150-07-15 >15 July 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/java/"> Java </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                1 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <p><strong>注意:</strong></p>
+<blockquote>
+<p>不要在foreach循环里进行元素的remove/add操作。remove元素请使用Iterator方式，如果并发操作，需要对Iterator对象加锁。</p>
+</blockquote>
+<h2 id="java-8之前">Java 8之前</h2>
+<h3 id="list">List</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">        <span class="c1">// List
+</span><span class="c1"></span>		<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">6</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;1&#34;</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;2&#34;</span><span class="o">);</span>
+		<span class="k">for</span> <span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">iterator</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">iterator</span><span class="o">();</span><span class="n">iterator</span><span class="o">.</span><span class="na">hasNext</span><span class="o">();){</span>
+			<span class="n">String</span> <span class="n">item</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">删除元素的条件</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">iterator</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		
+		
+</code></pre></div><h3 id="map">Map</h3>
+<p><strong>规范:</strong></p>
+<blockquote>
+<p>使用 entrySet遍历 Map类集合 KV，而不是 keySet方式进行遍历。</p>
+</blockquote>
+<blockquote>
+<p>说明：keySet 其实是遍历了2 次，一次是转为 Iterator 对象，另一次是从 hashMap 中取出key所对应的 value。而 entrySet 只是遍历了一次就把 key和value都放到了entry中，效率更高。如果是 JDK8，使用 Map.forEach 方法。</p>
+</blockquote>
+<blockquote>
+<p>正例：values()返回的是 V值集合，是一个 list 集合对象；keySet()返回的是K 值集合，是一个 Set 集合对 象；entrySet()返回的是K-V值组合集合。</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">        <span class="c1">// Map 使用 entrySet
+</span><span class="c1"></span>		<span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;(</span><span class="n">6</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;a&#34;</span><span class="o">,</span><span class="n">1</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;b&#34;</span><span class="o">,</span><span class="n">2</span><span class="o">);</span>
+
+		<span class="k">for</span> <span class="o">(</span><span class="n">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">entry</span> <span class="o">:</span> <span class="n">map</span><span class="o">.</span><span class="na">entrySet</span><span class="o">()){</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;key:&#34;</span><span class="o">+</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">()+</span><span class="s">&#34;\tvalue:&#34;</span><span class="o">+</span><span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+		<span class="o">}</span>
+</code></pre></div><h2 id="java-8-之后">Java 8 之后</h2>
+<h3 id="使用foreach--lambda-表达式">使用forEach() + Lambda 表达式</h3>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">        <span class="c1">// List
+</span><span class="c1"></span>		<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">6</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;1&#34;</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;2&#34;</span><span class="o">);</span>
+		<span class="n">list</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">v</span><span class="o">));</span>
+		
+		<span class="c1">// Map
+</span><span class="c1"></span>		<span class="c1">// Map
+</span><span class="c1"></span>		<span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;(</span><span class="n">6</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;a&#34;</span><span class="o">,</span><span class="n">1</span><span class="o">);</span>
+		<span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">&#34;b&#34;</span><span class="o">,</span><span class="n">2</span><span class="o">);</span>
+
+		<span class="n">map</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span><span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;key:&#34;</span><span class="o">+</span><span class="n">k</span><span class="o">+</span><span class="s">&#34;\tvalue:&#34;</span><span class="o">+</span><span class="n">v</span><span class="o">);</span>
+		<span class="o">});</span>
+		
+</code></pre></div><p>使用forEach + Lambda表达式之后，代码量减少了很多。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<blockquote>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>433</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/07/iterate/" > https://www.ipooli.com/2020/07/iterate/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f07%2fiterate%2f&amp;text=Java%20List%e5%92%8cMap%e9%81%8d%e5%8e%86%e7%9a%84%e6%96%b9%e6%b3%95%2cforEach%28%29%e7%9a%84%e4%bd%bf%e7%94%a8&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f07%2fiterate%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f07%2fiterate%2f&amp;title=Java%20List%e5%92%8cMap%e9%81%8d%e5%8e%86%e7%9a%84%e6%96%b9%e6%b3%95%2cforEach%28%29%e7%9a%84%e4%bd%bf%e7%94%a8" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f07%2fiterate%2f&amp;appkey=&amp;title=Java%20List%e5%92%8cMap%e9%81%8d%e5%8e%86%e7%9a%84%e6%96%b9%e6%b3%95%2cforEach%28%29%e7%9a%84%e4%bd%bf%e7%94%a8" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/java/">
+                    #Java</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/06/flink-deploy/" class="prev" rel="prev" title="Flink 集群搭建,Standalone,集群部署,HA高可用部署"><i class="iconfont icon-dajiantou"></i>&nbsp;Flink 集群搭建,Standalone,集群部署,HA高可用部署</a>
+         
+        
+        <a href="https://www.ipooli.com/2020/09/object-dead/" class="next" rel="next" title="Java虚拟机垃圾回收-对象是否已死">Java虚拟机垃圾回收-对象是否已死&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/07/iterate/" class="leancloud_visitors" data-flag-title="Java List和Map遍历的方法,forEach()的使用">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

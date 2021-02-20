@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on Ipoo</title>
+    <link>https://www.ipooli.com/tags/linux/</link>
+    <description>Recent content in linux on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 28 May 2020 17:36:37 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux关闭防火墙 Centos7如何关闭防火墙</title>
+      <link>https://www.ipooli.com/2020/05/turn-fire/</link>
+      <pubDate>Thu, 28 May 2020 17:36:37 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/05/turn-fire/</guid>
+      <description>查看防火墙状态 systemctl status firewalld centos7：service iptables status 即使生效，临时关闭 systemctl stop firewalld service iptables stop 永久关闭防火墙 chkconfig iptables off centos7：systemctl disable</description>
+    </item>
+    
+    <item>
+      <title>Linux 集群免密登录配置,双向免密</title>
+      <link>https://www.ipooli.com/2020/04/linux_host/</link>
+      <pubDate>Sat, 25 Apr 2020 11:18:55 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/linux_host/</guid>
+      <description>linux 集群免密登录配置 第一种方法 第二种方法 linux 集群免密登录配置 第一种方法 我这边准备三台主机 分别为bigdata1,bigdata2,bigdata</description>
+    </item>
+    
+  </channel>
+</rss>

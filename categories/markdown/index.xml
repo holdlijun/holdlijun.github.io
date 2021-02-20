@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown on Ipoo</title>
+    <link>https://www.ipooli.com/categories/markdown/</link>
+    <description>Recent content in Markdown on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 18 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/categories/markdown/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Markdown 基础语法与进阶使用</title>
+      <link>https://www.ipooli.com/2020/03/learn-md/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/03/learn-md/</guid>
+      <description>标题 段落 换行符 文本 插入图片 引用区块 列表 代码块 代码块中语法高亮 链接 网址和电子邮件地址 转义字符 Markdown使用表情符号 标题 Markdown语</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" kafka能做什么？kafak如何使用,kafka集群配置 (卡夫卡 大数据)"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/04/linux_host/" />
+  <link rel="next" href="https://www.ipooli.com/2020/04/rm-mongo/" />
+  <link rel="canonical" href="https://www.ipooli.com/2020/04/learn-kafka/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           kafka能做什么？kafka集群配置 (卡夫卡 大数据) | Ipoo
+       
+  </title>
+  <meta name="title" content="kafka能做什么？kafka集群配置 (卡夫卡 大数据) | Ipoo">
+  <meta name="keyword" content=" kafka,kafka集群,kafka使用"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="kafka能做什么？kafka集群配置 (卡夫卡 大数据)"/>
+<meta name="twitter:description" content="kafka能做什么？kafak如何使用,kafka集群配置 (卡夫卡 大数据)"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "kafka能做什么？kafka集群配置 (卡夫卡 大数据)",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/04\/learn-kafka\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "大数据, kafka, 消息中间件",
+  "wordcount":  866 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/04\/learn-kafka\/",
+  "datePublished": "2020-04-25T13:28:12\x2b08:00",
+  "dateModified": "2020-04-25T13:28:12\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "kafka能做什么？kafak如何使用,kafka集群配置 (卡夫卡 大数据)"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">kafka能做什么？kafka集群配置 (卡夫卡 大数据)</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=25250-04-25 >25 April 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"> 大数据 </a>
+                        <a href="https://www.ipooli.com/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"> 消息中间件 </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                2 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <!-- raw HTML omitted -->
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFkafka">什么是Kafka</a>
+<ul>
+<li><a href="#%E5%AE%98%E7%BD%91%E4%BB%8B%E7%BB%8D%EF%BC%9A">官网介绍：</a></li>
+<li><a href="#%E5%87%A0%E4%B8%AA%E6%A6%82%E5%BF%B5%EF%BC%9A">几个概念：</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D-%EF%BC%9A">详细介绍 ：</a></li>
+<li><a href="#%E6%93%8D%E4%BD%9Ckafka%EF%BC%9A">操作kafka：</a></li>
+<li><a href="#kafka%E9%9B%86%E7%BE%A4">kafka集群</a></li>
+<li><a href="#%E6%B6%88%E6%81%AF%E6%B5%8B%E8%AF%95">消息测试</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%A3%80%E6%B5%8B">问题检测</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<h2 id="什么是kafka">什么是Kafka</h2>
+<h3 id="官网介绍">官网介绍：</h3>
+<blockquote>
+<p>ApacheKafka®是一个分布式流媒体平台。这到底是什么意思呢？</p>
+<p>我们认为流媒体平台具有三个关键功能：</p>
+<ol>
+<li>它可以让你发布和订阅记录流。在这方面，它类似于消​​息队列或企业消息传递系统。</li>
+<li>它允许您以容错方式存储记录流。</li>
+<li>它可以让您在发生记录时处理记录流。</li>
+</ol>
+</blockquote>
+<h3 id="几个概念">几个概念：</h3>
+<ol>
+<li>Kafka作为一个或多个服务器上的集群运行。</li>
+<li>Kafka集群以称为主题的类别存储记录流。</li>
+<li>每个记录由一个键，一个值和一个时间戳组成。</li>
+</ol>
+<h2 id="详细介绍-">详细介绍 ：</h2>
+<p><a href="https://blog.csdn.net/qq_37518574/article/details/105748930">这篇博客写的很详细</a></p>
+<ul>
+<li>下载安装
+<a href="https://www.apache.org/dyn/closer.cgi?path=/kafka/2.5.0/kafka-2.5.0-src.tgz">官网下载地址</a>: <code>https://www.apache.org/dyn/closer.cgi?path=/kafka/2.5.0/kafka-2.5.0-src.tgz</code></li>
+<li>解压：<code>tar zxf kafka_2.11-1.0.0</code></li>
+<li>启动Zookeeper：测试可以采用kafka自带zookeeper</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">	<span class="o">./</span><span class="n">bin</span><span class="o">/</span><span class="n">zookeeper</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">start</span><span class="o">.</span><span class="na">sh</span> <span class="n">config</span><span class="o">/</span><span class="n">zookeeper</span><span class="o">.</span><span class="na">properties</span> 
+</code></pre></div><ul>
+<li>启动kafka：
+<code>./bin/kafka-server-start.sh config/server.properties</code></li>
+</ul>
+<p>在默认的 kafka_2.11-1.0.0/config 目录下的server.properties文件中
+默认端口为9092</p>
+<h2 id="操作kafka">操作kafka：</h2>
+<ul>
+<li>创建名为<code>test</code>的topic</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+</code></pre></div><ul>
+<li>创建生产者（生产消息）：</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+</code></pre></div><p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTE4MTQwMDQ2NzU5" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+<ul>
+<li>创建消费者（消费消息）：</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+</code></pre></div><p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltZy5ibG9nLmNzZG4ubmV0LzIwMTgwMTE4MTQwMTE5MTM3" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure></p>
+<h2 id="kafka集群">kafka集群</h2>
+<ul>
+<li>
+<p>创建配置文件 <code>server.properties</code>拷贝到其他机器</p>
+</li>
+<li>
+<p>修改<code>server.properties</code>配置,修改为:</p>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">    broker.id=1
+    listeners=PLAINTEXT://:9093
+    log.dir=/tmp/kafka-logs-1
+</code></pre></div><p>broker.id:当前机器在集群中的唯一标识,每台服务器的broker.id都不能相同</p>
+<p>log.dirs:是kafka接收消息存放路径</p>
+<ul>
+<li>启动</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-server-start.sh config/server.properties &amp; 
+</code></pre></div><ul>
+<li>创建topic</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic test2
+</code></pre></div><ul>
+<li>查看topic</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test2
+
+Topic:test2	PartitionCount:1	ReplicationFactor:3	Configs:
+	Topic: zhh-replicated-topic	Partition: 0	Leader: 2	Replicas: 2,0,1	Isr: 2,0,1
+</code></pre></div><p>第一行表示汇总信息. 有1个分区, 3份备份</p>
+<p>第二行表示每个分区的信息,对分区0,领导节点id是2, 备份到2,0,1.</p>
+<p>leader 表示负责某分区全部读写的节点. 每个分区都会有随机选择的leader.</p>
+<p>Replicas 表示需要复制到的节点, 不管是否活着.</p>
+<p>Isr 表示(“in-sync” replicas), 正在同步的备份, 表示可用的活着的节点</p>
+<h2 id="消息测试">消息测试</h2>
+<ul>
+<li>创建生产者</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test2
+</code></pre></div><ul>
+<li>创建消费者</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test2 --from-beginning
+</code></pre></div><h2 id="问题检测">问题检测</h2>
+<ul>
+<li>节点崩溃</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">ps aux | grep server.properties    #查看节点（73370）是否已启用
+kill -9 73370					   #杀死此节点
+</code></pre></div><ul>
+<li>zookeeper
+zookeeper打开后要打开新的连接操作kafka。</li>
+</ul>
+<p><strong>有帮助请留言&hellip;</strong></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<blockquote>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>866</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/04/learn-kafka/" > https://www.ipooli.com/2020/04/learn-kafka/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flearn-kafka%2f&amp;text=kafka%e8%83%bd%e5%81%9a%e4%bb%80%e4%b9%88%ef%bc%9fkafka%e9%9b%86%e7%be%a4%e9%85%8d%e7%bd%ae%20%28%e5%8d%a1%e5%a4%ab%e5%8d%a1%20%e5%a4%a7%e6%95%b0%e6%8d%ae%29&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flearn-kafka%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flearn-kafka%2f&amp;title=kafka%e8%83%bd%e5%81%9a%e4%bb%80%e4%b9%88%ef%bc%9fkafka%e9%9b%86%e7%be%a4%e9%85%8d%e7%bd%ae%20%28%e5%8d%a1%e5%a4%ab%e5%8d%a1%20%e5%a4%a7%e6%95%b0%e6%8d%ae%29" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flearn-kafka%2f&amp;appkey=&amp;title=kafka%e8%83%bd%e5%81%9a%e4%bb%80%e4%b9%88%ef%bc%9fkafka%e9%9b%86%e7%be%a4%e9%85%8d%e7%bd%ae%20%28%e5%8d%a1%e5%a4%ab%e5%8d%a1%20%e5%a4%a7%e6%95%b0%e6%8d%ae%29" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/">
+                    #大数据</a></span>
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/kafka/">
+                    #kafka</a></span>
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+                    #消息中间件</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/04/linux_host/" class="prev" rel="prev" title="Linux 集群免密登录配置,双向免密"><i class="iconfont icon-dajiantou"></i>&nbsp;Linux 集群免密登录配置,双向免密</a>
+         
+        
+        <a href="https://www.ipooli.com/2020/04/rm-mongo/" class="next" rel="next" title="被删库&#39;勒索&#39;警醒事件">被删库&#39;勒索&#39;警醒事件&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/04/learn-kafka/" class="leancloud_visitors" data-flag-title="kafka能做什么？kafka集群配置 (卡夫卡 大数据)">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <link crossorigin="anonymous" integrity="sha384-yziQACfvCVwLqVFLqkWBYRO3XeA4EqzfXKGwaWnenYn5XzqfJFlFdKEmvutIQdKb" href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" Flink DataStream中min(),minBy(),max(),max()之间的区别,举例论证"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/06/sheji/" />
+  <link rel="next" href="https://www.ipooli.com/2020/06/output/" />
+  <link rel="canonical" href="https://www.ipooli.com/2020/06/minother/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Flink DataStream中min(),minBy(),max(),max()之间的区别 | Ipoo
+       
+  </title>
+  <meta name="title" content="Flink DataStream中min(),minBy(),max(),max()之间的区别 | Ipoo">
+  <meta name="keyword" content=" Flink,DataStream,min(),max"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Flink DataStream中min(),minBy(),max(),max()之间的区别"/>
+<meta name="twitter:description" content="Flink DataStream中min(),minBy(),max(),max()之间的区别,举例论证"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Flink DataStream中min(),minBy(),max(),max()之间的区别",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/06\/minother\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "Flink",
+  "wordcount":  472 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/06\/minother\/",
+  "datePublished": "2020-06-10T11:31:25\x2b08:00",
+  "dateModified": "2020-06-10T11:31:25\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "Flink DataStream中min(),minBy(),max(),max()之间的区别,举例论证"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">Flink DataStream中min(),minBy(),max(),max()之间的区别</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=10100-06-10 >10 June 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/flink/"> Flink </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                1 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="解释">解释</h2>
+<p>官方文档中:</p>
+<blockquote>
+<p>The difference between min and minBy is that min returns the minimum value, whereas minBy returns the element that has the minimum value in this field (same for max and maxBy).</p>
+</blockquote>
+<p>翻译:</p>
+<blockquote>
+<p>min和minBy之间的区别是min返回最小值，而minBy返回在此字段中具有最小值的元素（与max和maxBy相同）。</p>
+</blockquote>
+<p><strong>但是事实上,min与max 也会返回整个元素。</strong></p>
+<p>不同的是min会根据指定的字段取最小值，并且把这个值保存在对应的位置上，对于其他的字段取了最先获取的值，不能保证每个元素的数值正确，max同理。</p>
+<p>而minBy会返回指定字段取最小值的元素，并且会覆盖指定字段小于当前已找到的最小值元素。maxBy同理。</p>
+<h2 id="示例论证">示例论证</h2>
+<p>先拿min()与minBy()举例:</p>
+<p>取第三个元素的最小值</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">StreamExecutionEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="c1">//获取数据源
+</span><span class="c1"></span>        <span class="n">List</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Tuple3</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;&gt;();</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">0</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">2</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">0</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">0</span><span class="o">,</span><span class="n">5</span><span class="o">,</span><span class="n">6</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">0</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">5</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">9</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">1</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">8</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">1</span><span class="o">,</span><span class="n">3</span><span class="o">,</span><span class="n">10</span><span class="o">));</span>
+        <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">Tuple3</span><span class="o">&lt;&gt;(</span><span class="n">1</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">9</span><span class="o">));</span>
+
+        <span class="n">DataStreamSource</span><span class="o">&lt;</span><span class="n">Tuple3</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">items</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="na">fromCollection</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+        <span class="n">items</span><span class="o">.</span><span class="na">keyBy</span><span class="o">(</span><span class="n">0</span><span class="o">).</span><span class="na">min</span><span class="o">(</span><span class="n">2</span><span class="o">).</span><span class="na">print</span><span class="o">();</span>
+        
+        <span class="n">env</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">&#34;defined streaming source&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div><p>输出结果:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">2</span><span class="o">)</span>
+<span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">1</span><span class="o">)</span>
+<span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">1</span><span class="o">)</span>
+<span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">1</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">9</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">8</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">8</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">8</span><span class="o">)</span>
+</code></pre></div><p>可以看到返回的元素第二个字段取的是获取到第一个元素的字段值; 往下找,第二个元素的指定值是最小的，则把这个值保存的对应位置。</p>
+<p>接下来再看minBy()的运行结果:</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">2</span><span class="o">)</span>
+<span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">)</span>
+<span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">)</span>
+<span class="o">(</span><span class="n">0</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">9</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">8</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">8</span><span class="o">)</span>
+<span class="o">(</span><span class="n">1</span><span class="o">,</span><span class="n">2</span><span class="o">,</span><span class="n">8</span><span class="o">)</span>
+</code></pre></div><p>返回的是指定字段最小值的元素。可以看到元素数值的正确。</p>
+<p>当然max(),maxBy同理。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<blockquote>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>472</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/06/minother/" > https://www.ipooli.com/2020/06/minother/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fminother%2f&amp;text=Flink%20DataStream%e4%b8%admin%28%29%2cminBy%28%29%2cmax%28%29%2cmax%28%29%e4%b9%8b%e9%97%b4%e7%9a%84%e5%8c%ba%e5%88%ab&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fminother%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fminother%2f&amp;title=Flink%20DataStream%e4%b8%admin%28%29%2cminBy%28%29%2cmax%28%29%2cmax%28%29%e4%b9%8b%e9%97%b4%e7%9a%84%e5%8c%ba%e5%88%ab" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fminother%2f&amp;appkey=&amp;title=Flink%20DataStream%e4%b8%admin%28%29%2cminBy%28%29%2cmax%28%29%2cmax%28%29%e4%b9%8b%e9%97%b4%e7%9a%84%e5%8c%ba%e5%88%ab" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/flink/">
+                    #Flink</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/06/sheji/" class="prev" rel="prev" title="图片,视频素材整理"><i class="iconfont icon-dajiantou"></i>&nbsp;图片,视频素材整理</a>
+         
+        
+        <a href="https://www.ipooli.com/2020/06/output/" class="next" rel="next" title="Flink 如何分流数据">Flink 如何分流数据&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/06/minother/" class="leancloud_visitors" data-flag-title="Flink DataStream中min(),minBy(),max(),max()之间的区别">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

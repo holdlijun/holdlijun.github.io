@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" Java虚拟机垃圾回收-对象是否已死,如何判断对象是否存活"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/07/iterate/" />
+  
+  <link rel="canonical" href="https://www.ipooli.com/2020/09/object-dead/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Java虚拟机垃圾回收-对象是否已死 | Ipoo
+       
+  </title>
+  <meta name="title" content="Java虚拟机垃圾回收-对象是否已死 | Ipoo">
+  <meta name="keyword" content=" JavaGC,GC日志,垃圾回收,Java垃圾回收"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java虚拟机垃圾回收-对象是否已死"/>
+<meta name="twitter:description" content="Java虚拟机垃圾回收-对象是否已死,如何判断对象是否存活"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Java虚拟机垃圾回收-对象是否已死",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/09\/object-dead\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "Java, 内存, GC, 对象回收",
+  "wordcount":  2178 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/09\/object-dead\/",
+  "datePublished": "2020-09-02T17:40:40\x2b08:00",
+  "dateModified": "2020-09-02T17:40:40\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "Java虚拟机垃圾回收-对象是否已死,如何判断对象是否存活"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">Java虚拟机垃圾回收-对象是否已死</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=2020-09-02 >2 September 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/java/"> Java </a>
+                        <a href="https://www.ipooli.com/categories/%E5%86%85%E5%AD%98/"> 内存 </a>
+                        <a href="https://www.ipooli.com/categories/gc/"> GC </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                5 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="如何判断对象是否已死">如何判断对象是否已死</h2>
+<p>在堆里存放着几乎所有的对象实例，垃圾收集器在堆进行回收前，要判断对象是否还存活着。</p>
+<blockquote>
+<p>Java堆是虚拟机所管理的内存中最大的一块。是所有线程共享的一块内存区域，在虚拟机启动创建。此内存区域唯一目的就是存放对象实例。</p>
+</blockquote>
+<h3 id="引用计数法reference-counting">引用计数法（Reference counting）</h3>
+<p>在对象中添加一个计数器，每当一个地方引用它时，计数器值就加1，当引用失效时，就减一，任何时刻计数器为零的对象就不可能再被使用的。<!-- raw HTML omitted -->
+引用计数法虽然占用额外的内存空间进行计数，但是原理简单，判定效率也很高，大对数情况下都是一个不错的算法，但是在Java领域主流的虚拟机没有想用此算法管理内存，需要很多例外的情况需要考虑，譬如对象之间的相互引用的问题。</p>
+<p>举个例子，下面代码中的testGC()方法，对象ObjA和ObjB都有instance，相互赋值，除此之外两个对象再无其他引用，实际上这两个对象已经不能在访问了，但是因为他们互相引用着对方，导致他们的引用计数都不为零，引用计数算法无法回收他们。</p>
+<blockquote>
+<p><a href="https://www.ipooli.com/2020/05/javagccheck/">java中GC垃圾回收机制,如何查看GC日志</a></p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">/**
+ * @Author: www.ipooli.com
+ * @DateTime: 2020/9/2 14:57
+ * @Description:
+ * ObjA 和 ObjB都会被回收掉，不会因为互相引用而放弃回收。
+ *
+ */
+public class ReferenceCountingGC {
+    public Object instance = null;
+
+    private static final int _1MB = 1024 * 1024;
+    /**
+     * 只为占用内存，以便在GC日志看清楚是否有回收过
+     */
+    private byte[] bigSize = new byte[2 * _1MB];
+
+    public static void testGC() {
+        ReferenceCountingGC objA = new ReferenceCountingGC();
+        ReferenceCountingGC objB = new ReferenceCountingGC();
+        objA.instance = objB;
+        objB.instance = objA;
+        objA = null;
+        objB = null;
+        System.gc();
+
+    }
+
+    public static void main(String[] args) {
+        testGC();
+    }
+
+}
+
+</code></pre></div><p>运行结果：</p>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">[GC (System.gc()) [PSYoungGen: 7997K-&gt;840K(75776K)] 7997K-&gt;848K(249344K), 0.0012598 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+[Full GC (System.gc()) [PSYoungGen: 840K-&gt;0K(75776K)] [ParOldGen: 8K-&gt;630K(173568K)] 848K-&gt;630K(249344K), [Metaspace: 3122K-&gt;3122K(1056768K)], 0.0043636 secs] [Times: user=0.00 sys=0.00, real=0.00 secs] 
+Heap
+ PSYoungGen      total 75776K, used 1951K [0x000000076b600000, 0x0000000770a80000, 0x00000007c0000000)
+  eden space 65024K, 3% used [0x000000076b600000,0x000000076b7e7cc0,0x000000076f580000)
+  from space 10752K, 0% used [0x000000076f580000,0x000000076f580000,0x0000000770000000)
+  to   space 10752K, 0% used [0x0000000770000000,0x0000000770000000,0x0000000770a80000)
+ ParOldGen       total 173568K, used 630K [0x00000006c2200000, 0x00000006ccb80000, 0x000000076b600000)
+  object space 173568K, 0% used [0x00000006c2200000,0x00000006c229db18,0x00000006ccb80000)
+ Metaspace       used 3137K, capacity 4496K, committed 4864K, reserved 1056768K
+  class space    used 343K, capacity 388K, committed 512K, reserved 1048576K
+
+Process finished with exit code 0
+
+</code></pre></div><p>可以看到7997K-&gt;840K ，意味着虚拟机并没有因为互相引用而放弃回收，也侧面说明虚拟机并不是通过引用计算法来判断对象的存活。</p>
+<h3 id="可达性分析算法reachability-analysis">可达性分析算法(Reachability Analysis)</h3>
+<p>当前主流的商用程序语言的内存管理子系统，都是通过可达性分析算法来判定对象是否存活的。<!-- raw HTML omitted -->
+这个算法的基本思路就是通过一系列成为 &ldquo;GC Roots&rdquo; 的根对象作为起始节点集，从这些节点开始，
+根据引用关系向下搜索，搜索过程所走过的路径成为&quot;引用链&rdquo;,如果某个对象到GC Roots间没有任何引用链相连，
+或者说从GC Roots到这个对象不可达时，则证明对象不可能再被使用的。</p>
+<p>如图所示，对象object5，object6，object,7 虽然互有关联，但是它们到GC Roots是不可达的，因此它们会被判定为可回收的对象。
+<figure><img src="/images/ring.svg" data-sizes="auto" data-src="http://oss.ipooli.com/uploads%2F2020%2F09%2F02%2FGC%20Roots.png?Expires=1599036647" alt="可达性分析算法判定对象是否可回收" class="lazyload"><figcaption class="image-caption">可达性分析算法判定对象是否可回收</figcaption></figure></p>
+<h4 id="gc-roots-对象包括以下几种">GC Roots 对象包括以下几种</h4>
+<ul>
+<li>在虚拟机栈中引用的对象，比如各个线程被调用的方法堆栈中使用的参数，局部变量，临时变量等。</li>
+<li>在方法区中类静态属性引用的对象。</li>
+<li>在方法区中常量引用的对象，比如字符串常量池里的引用</li>
+<li>在本地方法中JNI（Native方法）引用的对象</li>
+<li>Java虚拟机内部的引用</li>
+<li>所有被同步锁（synchronized关键字）持有的对象</li>
+<li>反映Java虚拟机内部情况的JMXBean，JVMTI中注册的回调，本地代码缓存等。</li>
+</ul>
+<p>但是即使在可达性分析算法中判定为不可达的对象，也不是<code>非死不可</code>的,这时候会被第一次打上标记，随后在进行一次筛选，筛选的条件为此对象时候有必要执行finalize()方法。</p>
+<p>假如对象没有覆盖finalize()方法，或者已经调用过了，那么虚拟机将这两种情况都视为&quot;没有必要执行&rdquo;。
+如果这个对象被判定有必要执行finalize()方法，那么该对象将会被放置在一个名为F-Queue的队列之中，并在稍后由一条虚拟机自动建立的，低调度优先级的Finalize线程去执行它们的finalize()方法。</p>
+<p>但不会等待它运行结束。稍后收集器会对F-Queue中的对象进行第二次小规模的标记，如果对象要在finalize()方法成功拯救自己——只要重新与任何GC Roots建立关联即可。那么在第二次标记是它会被移出&quot;即将回收&quot;的集合，如果对象还没逃脱，那基本上它就真的要被回收了。
+从如下代码中可以看到，对象执行finalize()方法，但是它仍然可以存活。</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * @Author: www.ipooli.com
+</span><span class="cm"> * @DateTime: 2020/9/2 15:34
+</span><span class="cm"> * @Description: 
+</span><span class="cm"> *  对象可以在被GC的时候自救
+</span><span class="cm"> *  任何对象的finalize 只会被调用一次，如果对象面临下次的回收将不会被执行。
+</span><span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FinalizeEscapeGC</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">FinalizeEscapeGC</span> <span class="n">SAVE_HOOK</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">isAlive</span><span class="o">(){</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;yes,i&#39;m still alive&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 
+</span><span class="cm">     * @throws Throwable
+</span><span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">finalize</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">finalize</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;finalize method executed!&#34;</span><span class="o">);</span>
+        <span class="n">FinalizeEscapeGC</span><span class="o">.</span><span class="na">SAVE_HOOK</span> <span class="o">=</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+
+        <span class="n">SAVE_HOOK</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FinalizeEscapeGC</span><span class="o">();</span>
+        <span class="n">SAVE_HOOK</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">gc</span><span class="o">();</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">500</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">SAVE_HOOK</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">SAVE_HOOK</span><span class="o">.</span><span class="na">isAlive</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;no,i&#39;m dead&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+    
+        <span class="c1">//下面这段代码与上面完全相同但是这次却自救失败了
+</span><span class="c1"></span>        <span class="n">SAVE_HOOK</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">gc</span><span class="o">();</span>
+        <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">500</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">SAVE_HOOK</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">SAVE_HOOK</span><span class="o">.</span><span class="na">isAlive</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;no,i&#39;m dead&#34;</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+</code></pre></div><p>运行结果:</p>
+<div class="highlight"><pre class="chroma"><code class="language-txt" data-lang="txt">finalize method executed!
+yes,i&#39;m still alive
+no,i&#39;m dead
+</code></pre></div><p>从结果可以看到 SAVE_HOOK对象的finalize()方法确实被垃圾收集器触发过，并且在被收集前成功逃脱了。
+但是下面那段代码却自救失败了，这是一位任何一个对象的finalize()方法都只会被系统调用一次，如果对象面临下一次回收，它的finalize()方法不会被再次执行，因此第二段代码自救失败了。</p>
+<p>但是尽量避免使用finaliz()方法，它的运行代价高昂，不确定性大，无法保证各个对象的调用顺序，如今已被官方声明为不推荐使用的语法。</p>
+<h2 id="总结">总结</h2>
+<p>虚拟机通过可达性分析算法判定对象是否存活，对象也还有一次通过finalize()方法来自救，但不建议使用finalize()语法。</p>
+<blockquote>
+<p><em>参考《深入理解Java虚拟机（第3版）》</em>: <a href="https://book.douban.com/subject/34907497/">《深入理解Java虚拟机（第3版）》</a></p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>2178</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/09/object-dead/" > https://www.ipooli.com/2020/09/object-dead/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f09%2fobject-dead%2f&amp;text=Java%e8%99%9a%e6%8b%9f%e6%9c%ba%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6-%e5%af%b9%e8%b1%a1%e6%98%af%e5%90%a6%e5%b7%b2%e6%ad%bb&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f09%2fobject-dead%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f09%2fobject-dead%2f&amp;title=Java%e8%99%9a%e6%8b%9f%e6%9c%ba%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6-%e5%af%b9%e8%b1%a1%e6%98%af%e5%90%a6%e5%b7%b2%e6%ad%bb" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f09%2fobject-dead%2f&amp;appkey=&amp;title=Java%e8%99%9a%e6%8b%9f%e6%9c%ba%e5%9e%83%e5%9c%be%e5%9b%9e%e6%94%b6-%e5%af%b9%e8%b1%a1%e6%98%af%e5%90%a6%e5%b7%b2%e6%ad%bb" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/java/">
+                    #Java</a></span>
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/%E5%86%85%E5%AD%98/">
+                    #内存</a></span>
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/gc/">
+                    #GC</a></span>
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/%E5%AF%B9%E8%B1%A1%E5%9B%9E%E6%94%B6/">
+                    #对象回收</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/07/iterate/" class="prev" rel="prev" title="Java List和Map遍历的方法,forEach()的使用"><i class="iconfont icon-dajiantou"></i>&nbsp;Java List和Map遍历的方法,forEach()的使用</a>
+         
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/09/object-dead/" class="leancloud_visitors" data-flag-title="Java虚拟机垃圾回收-对象是否已死">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <link crossorigin="anonymous" integrity="sha384-yziQACfvCVwLqVFLqkWBYRO3XeA4EqzfXKGwaWnenYn5XzqfJFlFdKEmvutIQdKb" href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

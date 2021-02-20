@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>消息中间件 on Ipoo</title>
+    <link>https://www.ipooli.com/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+    <description>Recent content in 消息中间件 on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 25 Apr 2020 13:28:12 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>kafka能做什么？kafka集群配置 (卡夫卡 大数据)</title>
+      <link>https://www.ipooli.com/2020/04/learn-kafka/</link>
+      <pubDate>Sat, 25 Apr 2020 13:28:12 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/learn-kafka/</guid>
+      <description>什么是Kafka 官网介绍： 几个概念： 详细介绍 ： 操作kafka： kafka集群 消息测试 问题检测 什么是Kafka 官网介绍： ApacheKafka</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>https on Ipoo</title>
+    <link>https://www.ipooli.com/categories/https/</link>
+    <description>Recent content in https on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 13 Apr 2020 14:46:09 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/categories/https/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>https绕过证书认证请求 Get或Post请求（证书过期，忽略证书）</title>
+      <link>https://www.ipooli.com/2020/04/bypass_ssl/</link>
+      <pubDate>Mon, 13 Apr 2020 14:46:09 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/bypass_ssl/</guid>
+      <description>报错信息 解决： postman方式 java请求 报错信息 javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target 如果证书过期，配置容器为</description>
+    </item>
+    
+  </channel>
+</rss>

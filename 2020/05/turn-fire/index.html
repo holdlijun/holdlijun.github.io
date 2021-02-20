@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" Linux关闭防火墙,Centos7怎么关闭防火墙"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/05/javagccheck/" />
+  <link rel="next" href="https://www.ipooli.com/2020/06/k8s-what/" />
+  <link rel="canonical" href="https://www.ipooli.com/2020/05/turn-fire/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux关闭防火墙 Centos7如何关闭防火墙 | Ipoo
+       
+  </title>
+  <meta name="title" content="Linux关闭防火墙 Centos7如何关闭防火墙 | Ipoo">
+  <meta name="keyword" content=" linux,防火墙"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux关闭防火墙 Centos7如何关闭防火墙"/>
+<meta name="twitter:description" content="Linux关闭防火墙,Centos7怎么关闭防火墙"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Linux关闭防火墙 Centos7如何关闭防火墙",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/05\/turn-fire\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "linux",
+  "wordcount":  107 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/05\/turn-fire\/",
+  "datePublished": "2020-05-28T17:36:37\x2b08:00",
+  "dateModified": "2020-05-28T17:36:37\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "Linux关闭防火墙,Centos7怎么关闭防火墙"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">Linux关闭防火墙 Centos7如何关闭防火墙</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=28280-05-28 >28 May 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/linux/"> linux </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                1 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="查看防火墙状态">查看防火墙状态</h2>
+<p><code>systemctl status firewalld</code></p>
+<p>centos7：<code>service  iptables status</code></p>
+<h2 id="即使生效临时关闭">即使生效，临时关闭</h2>
+<p><code>systemctl stop firewalld</code></p>
+<p><code>service iptables stop</code></p>
+<h2 id="永久关闭防火墙">永久关闭防火墙</h2>
+<p><code>chkconfig iptables off</code></p>
+<p>centos7：<code>systemctl disable firewalld</code> (停止并禁用开机启动)</p>
+<h2 id="启动防火墙">启动防火墙</h2>
+<p><code>systemctl start firewalld</code></p>
+<h2 id="重启防火墙">重启防火墙</h2>
+<p><code>systemctl enable firewalld</code> (开机启动)</p>
+<p><code>service iptables restart</code></p>
+<hr>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>107</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/05/turn-fire/" > https://www.ipooli.com/2020/05/turn-fire/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f05%2fturn-fire%2f&amp;text=Linux%e5%85%b3%e9%97%ad%e9%98%b2%e7%81%ab%e5%a2%99%20Centos7%e5%a6%82%e4%bd%95%e5%85%b3%e9%97%ad%e9%98%b2%e7%81%ab%e5%a2%99&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f05%2fturn-fire%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f05%2fturn-fire%2f&amp;title=Linux%e5%85%b3%e9%97%ad%e9%98%b2%e7%81%ab%e5%a2%99%20Centos7%e5%a6%82%e4%bd%95%e5%85%b3%e9%97%ad%e9%98%b2%e7%81%ab%e5%a2%99" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f05%2fturn-fire%2f&amp;appkey=&amp;title=Linux%e5%85%b3%e9%97%ad%e9%98%b2%e7%81%ab%e5%a2%99%20Centos7%e5%a6%82%e4%bd%95%e5%85%b3%e9%97%ad%e9%98%b2%e7%81%ab%e5%a2%99" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/linux/">
+                    #linux</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/05/javagccheck/" class="prev" rel="prev" title="java中GC垃圾回收机制,如何查看GC日志"><i class="iconfont icon-dajiantou"></i>&nbsp;java中GC垃圾回收机制,如何查看GC日志</a>
+         
+        
+        <a href="https://www.ipooli.com/2020/06/k8s-what/" class="next" rel="next" title="Kubernetes 是什么">Kubernetes 是什么&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/05/turn-fire/" class="leancloud_visitors" data-flag-title="Linux关闭防火墙 Centos7如何关闭防火墙">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

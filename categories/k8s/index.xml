@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>K8S on Ipoo</title>
+    <link>https://www.ipooli.com/categories/k8s/</link>
+    <description>Recent content in K8S on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 02 Jun 2020 12:04:52 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/categories/k8s/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes 是什么</title>
+      <link>https://www.ipooli.com/2020/06/k8s-what/</link>
+      <pubDate>Tue, 02 Jun 2020 12:04:52 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/06/k8s-what/</guid>
+      <description>Kubernetes 是什么 分别解释下 k8s 的几个关键字 生产级别 容器 编排系统 k8s 架构概览 Master 组件 Node 组件 概念 计算资源 网络通信 工作模型 ReplicaSet DaemonSet Job CronJob StatefulSets 更新部署 数据持久化 Persistent Volumes Persistent Volumes Claim</description>
+    </item>
+    
+  </channel>
+</rss>

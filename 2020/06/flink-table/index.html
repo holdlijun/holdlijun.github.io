@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" 介绍Flink Table Api &amp; SQL和实现了两表连接的示例"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/06/output/" />
+  <link rel="next" href="https://www.ipooli.com/2020/06/flink-deploy/" />
+  <link rel="canonical" href="https://www.ipooli.com/2020/06/flink-table/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Flink Table Api &amp; SQL 初体验,Blink的使用 | Ipoo
+       
+  </title>
+  <meta name="title" content="Flink Table Api &amp; SQL 初体验,Blink的使用 | Ipoo">
+  <meta name="keyword" content=" Flink,Flink Table,Flink SQL"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Flink Table Api &amp; SQL 初体验,Blink的使用"/>
+<meta name="twitter:description" content="介绍Flink Table Api &amp; SQL和实现了两表连接的示例"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Flink Table Api \x26 SQL 初体验,Blink的使用",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/06\/flink-table\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "Flink",
+  "wordcount":  723 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/06\/flink-table\/",
+  "datePublished": "2020-06-20T11:18:11\x2b08:00",
+  "dateModified": "2020-06-20T11:18:11\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "介绍Flink Table Api \x26 SQL和实现了两表连接的示例"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">Flink Table Api &amp; SQL 初体验,Blink的使用</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=20200-06-20 >20 June 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/flink/"> Flink </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                2 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        <img src="https://bigdata-lijun.oss-cn-hangzhou.aliyuncs.com/uploads%2F2020%2F06%2F20%2F91PYjFhF_%E7%A8%BF%E5%AE%9A%E8%AE%BE%E8%AE%A1%E5%AF%BC%E5%87%BA-20200620-112750.png?Expires=1592623720" class="featured_image">
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <!-- raw HTML omitted -->
+<ul>
+<li><a href="#%E6%A6%82%E8%BF%B0">概述</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8">使用</a>
+<ul>
+<li><a href="#pom%E4%BE%9D%E8%B5%96">pom依赖</a></li>
+<li><a href="#%E6%A8%A1%E6%8B%9F%E4%B8%80%E4%B8%AA%E5%AE%9E%E6%97%B6%E6%B5%81">模拟一个实时流</a></li>
+<li><a href="#%E4%B8%BB%E7%A8%8B%E5%BA%8F">主程序</a></li>
+<li><a href="#%E7%BB%93%E6%9E%9C%E6%89%93%E5%8D%B0">结果打印</a></li>
+</ul>
+</li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<h1 id="概述">概述</h1>
+<p>Flink具有Table API和SQL-用于统一流和批处理。</p>
+<p>Table API是用于Scala和Java的语言集成查询API，它允许以非常直观的方式组合来自关系运算符（例如选择，过滤和联接）的查询。</p>
+<p>Flink的SQL支持基于实现SQL标准的Apache Calcite。无论输入是批处理输入（DataSet）还是流输入（DataStream），在两个接口中指定的查询都具有相同的语义并指定相同的结果。</p>
+<p>Table API和SQL尚未完成所有功能，正在积极开发中，支持程度需查看 <a href="https://ci.apache.org/projects/flink/flink-docs-master/dev/table/#table-api-sql">官方文档</a></p>
+<h1 id="使用">使用</h1>
+<p>多表连接案例</p>
+<h2 id="pom依赖">pom依赖</h2>
+<p>flink 版本为:1.9.3</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">
+    <span class="o">&lt;</span><span class="n">dependencies</span><span class="o">&gt;</span>
+        <span class="o">&lt;!--</span> <span class="n">Apache</span> <span class="n">Flink</span> <span class="n">dependencies</span> <span class="o">--&gt;</span>
+        <span class="o">&lt;!--</span> <span class="n">These</span> <span class="n">dependencies</span> <span class="n">are</span> <span class="n">provided</span><span class="o">,</span> <span class="n">because</span> <span class="n">they</span> <span class="n">should</span> <span class="n">not</span> <span class="n">be</span> <span class="n">packaged</span> <span class="n">into</span> <span class="n">the</span> <span class="n">JAR</span> <span class="n">file</span><span class="o">.</span> <span class="o">--&gt;</span>
+        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">flink</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">flink</span><span class="o">-</span><span class="n">java</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">flink</span><span class="o">.</span><span class="na">version</span><span class="o">}&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">scope</span><span class="o">&gt;</span><span class="n">provided</span><span class="o">&lt;/</span><span class="n">scope</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+
+        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">flink</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">flink</span><span class="o">-</span><span class="n">streaming</span><span class="o">-</span><span class="n">java_$</span><span class="o">{</span><span class="n">scala</span><span class="o">.</span><span class="na">binary</span><span class="o">.</span><span class="na">version</span><span class="o">}&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">flink</span><span class="o">.</span><span class="na">version</span><span class="o">}&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">flink</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">flink</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">java</span><span class="o">-</span><span class="n">bridge_2</span><span class="o">.</span><span class="na">11</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">flink</span><span class="o">.</span><span class="na">version</span><span class="o">}&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">flink</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">flink</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="n">planner</span><span class="o">-</span><span class="n">blink_2</span><span class="o">.</span><span class="na">11</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">flink</span><span class="o">.</span><span class="na">version</span><span class="o">}&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+
+        <span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="o">.</span><span class="na">apache</span><span class="o">.</span><span class="na">flink</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">flink</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">java</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">flink</span><span class="o">.</span><span class="na">version</span><span class="o">}&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</code></pre></div><h2 id="模拟一个实时流">模拟一个实时流</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Item</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">getId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setId</span><span class="o">(</span><span class="n">Integer</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">id</span> <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Item</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">&#34;Item{&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;name=&#39;&#34;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="sc">&#39;\&#39;&#39;</span> <span class="o">+</span>
+                <span class="s">&#34;, id=&#34;</span> <span class="o">+</span> <span class="n">id</span> <span class="o">+</span>
+                <span class="sc">&#39;}&#39;</span><span class="o">;</span>
+    <span class="o">}</span>
+
+</code></pre></div><p>自定义Source</p>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java">
+<span class="kn">import</span> <span class="nn">common.Item</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.flink.streaming.api.functions.source.SourceFunction</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyStreamingSource</span> <span class="kd">implements</span> <span class="n">SourceFunction</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isRunning</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(</span><span class="n">SourceContext</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">ctx</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">isRunning</span><span class="o">){</span>
+            <span class="n">Item</span> <span class="n">item</span> <span class="o">=</span> <span class="n">generateItem</span><span class="o">();</span>
+            <span class="n">ctx</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">item</span><span class="o">);</span>
+            <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">1000</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+</span><span class="cm">     * 随机产生一条记录
+</span><span class="cm">     *
+</span><span class="cm">     * @return
+</span><span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">Item</span> <span class="nf">generateItem</span><span class="o">(){</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">100</span><span class="o">);</span>
+        <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">();</span>
+        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;HAT&#34;</span><span class="o">);</span>
+        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;TIE&#34;</span><span class="o">);</span>
+        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&#34;SHOE&#34;</span><span class="o">);</span>
+        <span class="n">Item</span> <span class="n">item</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Item</span><span class="o">();</span>
+        <span class="n">item</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="k">new</span> <span class="n">Random</span><span class="o">().</span><span class="na">nextInt</span><span class="o">(</span><span class="n">3</span><span class="o">)));</span>
+        <span class="n">item</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">item</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">cancel</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="主程序">主程序</h2>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TableStremingDemo</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="n">StreamExecutionEnvironment</span> <span class="n">bsEnv</span> <span class="o">=</span> <span class="n">StreamExecutionEnvironment</span><span class="o">.</span><span class="na">getExecutionEnvironment</span><span class="o">();</span>
+        <span class="c1">// 使用Blink
+</span><span class="c1"></span>        <span class="n">EnvironmentSettings</span> <span class="n">bsSettings</span> <span class="o">=</span> <span class="n">EnvironmentSettings</span><span class="o">.</span><span class="na">newInstance</span><span class="o">().</span><span class="na">useBlinkPlanner</span><span class="o">().</span><span class="na">inStreamingMode</span><span class="o">().</span><span class="na">build</span><span class="o">();</span>
+        <span class="n">StreamTableEnvironment</span> <span class="n">bsTableEnv</span> <span class="o">=</span> <span class="n">StreamTableEnvironment</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">bsEnv</span><span class="o">,</span> <span class="n">bsSettings</span><span class="o">);</span>
+
+        <span class="n">SingleOutputStreamOperator</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">source</span> <span class="o">=</span> <span class="n">bsEnv</span><span class="o">.</span><span class="na">addSource</span><span class="o">(</span><span class="k">new</span> <span class="n">MyStreamingSource</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="k">new</span> <span class="n">MapFunction</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">,</span> <span class="n">Item</span><span class="o">&gt;()</span> <span class="o">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="n">Item</span> <span class="nf">map</span><span class="o">(</span><span class="n">Item</span> <span class="n">value</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                        <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">});</span>
+        <span class="c1">// 分割流
+</span><span class="c1"></span>        <span class="kd">final</span> <span class="n">OutputTag</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">even</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OutputTag</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;(</span><span class="s">&#34;even&#34;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">};</span>
+        <span class="kd">final</span> <span class="n">OutputTag</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">old</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OutputTag</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;(</span><span class="s">&#34;old&#34;</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">};</span>
+
+        <span class="n">SingleOutputStreamOperator</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">sideOutputData</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="na">process</span><span class="o">(</span><span class="k">new</span> <span class="n">ProcessFunction</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">,</span> <span class="n">Item</span><span class="o">&gt;()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">processElement</span><span class="o">(</span><span class="n">Item</span> <span class="n">value</span><span class="o">,</span> <span class="n">Context</span> <span class="n">ctx</span><span class="o">,</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">out</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">value</span><span class="o">.</span><span class="na">getId</span><span class="o">()</span> <span class="o">%</span> <span class="n">2</span> <span class="o">==</span> <span class="n">0</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">ctx</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="n">even</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+                <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                    <span class="n">ctx</span><span class="o">.</span><span class="na">output</span><span class="o">(</span><span class="n">old</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">evenStream</span> <span class="o">=</span> <span class="n">sideOutputData</span><span class="o">.</span><span class="na">getSideOutput</span><span class="o">(</span><span class="n">even</span><span class="o">);</span>
+        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="n">oldStream</span> <span class="o">=</span> <span class="n">sideOutputData</span><span class="o">.</span><span class="na">getSideOutput</span><span class="o">(</span><span class="n">old</span><span class="o">);</span>
+        <span class="c1">// 注册两个 表 : evenTable,oddTable
+</span><span class="c1"></span>        <span class="n">bsTableEnv</span><span class="o">.</span><span class="na">registerDataStream</span><span class="o">(</span><span class="s">&#34;evenTable&#34;</span><span class="o">,</span><span class="n">evenStream</span> <span class="o">,</span> <span class="s">&#34;name,id&#34;</span><span class="o">);</span>
+        <span class="n">bsTableEnv</span><span class="o">.</span><span class="na">registerDataStream</span><span class="o">(</span><span class="s">&#34;oddTable&#34;</span><span class="o">,</span> <span class="n">oldStream</span><span class="o">,</span> <span class="s">&#34;name,id&#34;</span><span class="o">);</span>
+
+        <span class="c1">// 执行sql 输出Table
+</span><span class="c1"></span>        <span class="n">Table</span> <span class="n">queryTable</span> <span class="o">=</span> <span class="n">bsTableEnv</span><span class="o">.</span><span class="na">sqlQuery</span><span class="o">(</span><span class="s">&#34;select a.id,a.name,b.id,b.name from evenTable as a join oddTable as b on a.name = b.name&#34;</span><span class="o">);</span>
+        <span class="n">queryTable</span><span class="o">.</span><span class="na">printSchema</span><span class="o">();;</span>
+        <span class="c1">// 获取流
+</span><span class="c1"></span>        <span class="n">DataStream</span><span class="o">&lt;</span><span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">Boolean</span><span class="o">,</span> <span class="n">Tuple4</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;&gt;&gt;</span> <span class="n">dataStream</span> <span class="o">=</span> <span class="n">bsTableEnv</span><span class="o">.</span><span class="na">toRetractStream</span><span class="o">(</span><span class="n">queryTable</span><span class="o">,</span> <span class="n">TypeInformation</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="k">new</span> <span class="n">TypeHint</span><span class="o">&lt;</span><span class="n">Tuple4</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">String</span><span class="o">,</span><span class="n">Integer</span><span class="o">,</span><span class="n">String</span><span class="o">&gt;&gt;(){}));</span>
+        <span class="n">dataStream</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+
+        <span class="n">bsEnv</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="s">&#34;demo&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="结果打印">结果打印</h2>
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="https://bigdata-lijun.oss-cn-hangzhou.aliyuncs.com/uploads%2F2020%2F06%2F20%2F37vPgQWk_table.gif?Expires=1592622921" alt="" class="lazyload"><figcaption class="image-caption"></figcaption></figure>
+输出name相同的元素。</p>
+<h1 id="总结">总结</h1>
+<p>简单的介绍了Flink Table Api &amp; SQL和实现了两表连接的示例。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<blockquote>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>723</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/06/flink-table/" > https://www.ipooli.com/2020/06/flink-table/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fflink-table%2f&amp;text=Flink%20Table%20Api%20%26%20SQL%20%e5%88%9d%e4%bd%93%e9%aa%8c%2cBlink%e7%9a%84%e4%bd%bf%e7%94%a8&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fflink-table%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fflink-table%2f&amp;title=Flink%20Table%20Api%20%26%20SQL%20%e5%88%9d%e4%bd%93%e9%aa%8c%2cBlink%e7%9a%84%e4%bd%bf%e7%94%a8" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f06%2fflink-table%2f&amp;appkey=&amp;title=Flink%20Table%20Api%20%26%20SQL%20%e5%88%9d%e4%bd%93%e9%aa%8c%2cBlink%e7%9a%84%e4%bd%bf%e7%94%a8" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/flink/">
+                    #Flink</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/06/output/" class="prev" rel="prev" title="Flink 如何分流数据"><i class="iconfont icon-dajiantou"></i>&nbsp;Flink 如何分流数据</a>
+         
+        
+        <a href="https://www.ipooli.com/2020/06/flink-deploy/" class="next" rel="next" title="Flink 集群搭建,Standalone,集群部署,HA高可用部署">Flink 集群搭建,Standalone,集群部署,HA高可用部署&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/06/flink-table/" class="leancloud_visitors" data-flag-title="Flink Table Api &amp; SQL 初体验,Blink的使用">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <link crossorigin="anonymous" integrity="sha384-yziQACfvCVwLqVFLqkWBYRO3XeA4EqzfXKGwaWnenYn5XzqfJFlFdKEmvutIQdKb" href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

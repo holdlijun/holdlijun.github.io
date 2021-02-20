@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="INDEX,FOLLOW"/>
+  <meta name="googlebot" content="noodp" /> 
+  <meta name="description" content=" Linux 集群免密登录配置,双向免密"/>
+  <meta baidu-gxt-verify-token="8a77a1da5c26eb58907238196d21566e">
+  <meta name="google-site-verification" content="OUPOTv6Cwcm17JDL3SMqX2wxHLQfVTwiD5A6RDQgCWU" />
+  
+  
+  
+  <meta name="baidu-site-verification" content="8a77a1da5c26eb58907238196d21566e" />
+  <link rel="prev" href="https://www.ipooli.com/2020/04/bypass_ssl/" />
+  <link rel="next" href="https://www.ipooli.com/2020/04/learn-kafka/" />
+  <link rel="canonical" href="https://www.ipooli.com/2020/04/linux_host/" />
+  <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux 集群免密登录配置,双向免密 | Ipoo
+       
+  </title>
+  <meta name="title" content="Linux 集群免密登录配置,双向免密 | Ipoo">
+  <meta name="keyword" content=" Linux 集群免密登录配置,Linux"> 
+    
+  
+  <link rel="stylesheet" href="/font/iconfont.css">
+  <link rel="stylesheet" href="/css/main.min.css">
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux 集群免密登录配置,双向免密"/>
+<meta name="twitter:description" content="Linux 集群免密登录配置,双向免密"/>
+
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Linux 集群免密登录配置,双向免密",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https:\/\/www.ipooli.com\/2020\/04\/linux_host\/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "https:\/\/www.ipooli.com\/cover.png",
+    "width":  800 ,
+    "height":  600 
+  },
+  "genre": "posts",
+  "keywords": "linux",
+  "wordcount":  721 ,
+  "url": "https:\/\/www.ipooli.com\/2020\/04\/linux_host\/",
+  "datePublished": "2020-04-25T11:18:55\x2b08:00",
+  "dateModified": "2020-04-25T11:18:55\x2b08:00",
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "ipoo",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https:\/\/www.ipooli.com\/logo.png",
+      "width":  127 ,
+      "height":  40 
+    }
+  },
+  "author": {
+    "@type": "Person",
+    "name": "ipoo"
+  },
+  "description": "Linux 集群免密登录配置,双向免密"
+}
+</script>
+
+
+
+</head>
+
+
+  
+
+
+
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?76538a1b4b7f09be63de715e74b4c5cd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="https://www.ipooli.com/">Ipoo</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+                <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-sun"></i></a>&nbsp;<a href="https://www.ipooli.com/">Ipoo</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="/tags" title="">Tags</a>
+                
+                <a class="menu-item" href="/about" title="">About</a>
+                
+        </div>
+    </div>
+</nav>
+
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp">
+    <header class="post-header">
+        <h1 class="post-title">Linux 集群免密登录配置,双向免密</h1>
+        <div class="post-meta">
+              <a href="https://www.ipooli.com/" rel="author">ipoo</a>  ♥ 
+                <span class="post-time">
+                     <time datetime=25250-04-25 >25 April 2020</time>
+                </span>
+                
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://www.ipooli.com/categories/linux/"> linux </a>
+                        
+                </span>
+                <i class="iconfont icon-timer"></i>
+                2 min
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        <img src="http://oss.ipooli.com/images/blog/linx.png" class="featured_image">
+        
+        
+     
+          
+          
+          
+
+          
+          
+          
+
+          <!-- raw HTML omitted -->
+<ul>
+<li><a href="#linux-%E9%9B%86%E7%BE%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95%E9%85%8D%E7%BD%AE">linux 集群免密登录配置</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95">第一种方法</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%96%B9%E6%B3%95">第二种方法</a></li>
+</ul>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<h2 id="linux-集群免密登录配置">linux 集群免密登录配置</h2>
+<h3 id="第一种方法">第一种方法</h3>
+<ul>
+<li>我这边准备三台主机 <!-- raw HTML omitted -->
+分别为bigdata1,bigdata2,bigdata3</li>
+</ul>
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="http://oss.ipooli.com/images/blog/linuxhosts.png" alt="hosts" class="lazyload"><figcaption class="image-caption">hosts</figcaption></figure></p>
+<ul>
+<li>在bigdata1上生成秘钥对</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span>
+</code></pre></div><p>之后根据提示,回车
+进入.ssh目录会看见<code>id_rsa</code>(私钥) 和 <code>id_rsa.pub</code> (公钥)两个文件。</p>
+<ul>
+<li>将公钥文件拷贝到另外两台主机
+使用 <code>ssh-copy-id</code> 命令</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="err">#</span><span class="n">拷贝到bigdata2主机</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="n">id</span> <span class="o">-</span><span class="n">i</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="na">pub</span> <span class="n">root</span><span class="nd">@bigdata2</span>
+<span class="err">#</span> <span class="n">拷贝到bigdata3主机</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="n">id</span> <span class="o">-</span><span class="n">i</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="na">pub</span> <span class="n">root</span><span class="nd">@bigdata3</span>
+</code></pre></div><p>如图
+<figure><img src="/images/ring.svg" data-sizes="auto" data-src="http://oss.ipooli.com/images/blog/copyidrsa.png" alt="copy_id_rsa" class="lazyload"><figcaption class="image-caption">copy_id_rsa</figcaption></figure>
+即为成功。</p>
+<ul>
+<li>验证登录</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ssh</span> <span class="n">root</span><span class="nd">@bigdata2</span>
+</code></pre></div><p>如果不提示输入密码则成功。
+此方式另外两台主机登录bigdata1需要密码。
+如需三台互相登录不需要密码见下面方法。</p>
+<h3 id="第二种方法">第二种方法</h3>
+<ul>
+<li>我这边准备三台主机 <!-- raw HTML omitted -->
+分别为bigdata1,bigdata2,bigdata3</li>
+</ul>
+<p><figure><img src="/images/ring.svg" data-sizes="auto" data-src="http://oss.ipooli.com/images/blog/linuxhosts.png" alt="hosts" class="lazyload"><figcaption class="image-caption">hosts</figcaption></figure></p>
+<ul>
+<li>在<strong>每台主机</strong>上都生成秘钥对</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span>
+</code></pre></div><p>之后根据提示,回车
+进入.ssh目录会看见<code>id_rsa</code>(私钥) 和 <code>id_rsa.pub</code> (公钥)两个文件。</p>
+<ul>
+<li>在bigdata1上创建一个authorized_keys</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">cp</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="na">pub</span><span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+</code></pre></div><p>然后对集群中每台需要生成密钥对的机器都执行以上操作。</p>
+<ul>
+<li>把所有机器上的<code>authorized_keys</code> 合并</li>
+</ul>
+<ol>
+<li>简单方法 直接查看每台机器的<code>authorized_keys</code>文件,然后直接拷贝到一个文件中。</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">cat</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+</code></pre></div><ol start="2">
+<li>把合并后的一个<code>authorized_keys</code>文件,覆盖到所有机器的<code>~/.ssh/</code>的目录下。即可完成。</li>
+</ol>
+<hr>
+<p>另外一种方法稍显麻烦</p>
+<ol>
+<li>把所有机器上的<code>authorized_keys</code>远程拷贝到一个机器上,这这台机器上合并。在去远程拷贝覆盖，具体操作如下。
+<ul>
+<li>在bigdata2机器上执行:</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">scp</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span> <span class="n">root</span><span class="nd">@bidata1</span><span class="o">:~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">bigdata2_rsa</span>
+</code></pre></div><ul>
+<li>在bigdata3机器上执行:</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">scp</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span> <span class="n">root</span><span class="nd">@bidata1</span><span class="o">:~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">bigdata3_rsa</span>
+</code></pre></div><ul>
+<li>然后在bigdata1上合并</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">cat</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">bigdata2_rsa</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+<span class="n">cat</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">bigdata3_rsa</span> <span class="o">&gt;&gt;</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+</code></pre></div><ul>
+<li>然后将bigdata1上合并好的<code>authorized_keys</code>远程拷贝到其他机器</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">scp</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span> <span class="n">root</span><span class="nd">@bigdata2</span><span class="o">:~/.</span><span class="na">ssh</span>
+<span class="n">scp</span> <span class="o">~/.</span><span class="na">ssh</span><span class="o">/</span><span class="n">authorized_keys</span> <span class="n">root</span><span class="nd">@bigdata3</span><span class="o">:~/.</span><span class="na">ssh</span>
+</code></pre></div></li>
+<li>验证登录</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">ssh</span> <span class="n">root</span><span class="nd">@bigdata2</span>
+</code></pre></div><p>如果不提示输入密码则成功。</p>
+
+    </div>
+
+    <div class="post-copyright">
+             
+            <p class="copyright-item">
+                <span>作者:</span>
+                <span>ipoo </span>
+                </p>
+            
+           
+            <p class="copyright-item">
+                    <span>字数:</span>
+                   <span>721</span>
+            </p>
+            
+            <p class="copyright-item">
+                
+                <span>链接:</span>
+                <a href="https://www.ipooli.com/2020/04/linux_host/" > https://www.ipooli.com/2020/04/linux_host/ </a>
+                
+            </p>
+
+              <p class="copyright-item">
+                
+                <span>分享:</span>
+                <span>
+
+      
+        <a href="//twitter.com/share?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flinux_host%2f&amp;text=Linux%20%e9%9b%86%e7%be%a4%e5%85%8d%e5%af%86%e7%99%bb%e5%bd%95%e9%85%8d%e7%bd%ae%2c%e5%8f%8c%e5%90%91%e5%85%8d%e5%af%86&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="iconfont icon-twitter"></i>
+        </a>
+        
+      
+      
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flinux_host%2f" target="_blank" title="Share on Facebook">
+          <i class="iconfont icon-facebook"></i>
+        </a>
+        
+      
+      
+      
+      
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flinux_host%2f&amp;title=Linux%20%e9%9b%86%e7%be%a4%e5%85%8d%e5%af%86%e7%99%bb%e5%bd%95%e9%85%8d%e7%bd%ae%2c%e5%8f%8c%e5%90%91%e5%85%8d%e5%af%86" target="_blank" title="Share on LinkedIn">
+          <i class="iconfont icon-linkedin"></i>
+        </a>
+        
+      
+      
+        
+      
+        
+      
+
+          
+
+          
+
+          
+
+          
+        <a href="//service.weibo.com/share/share.php?url=https%3a%2f%2fwww.ipooli.com%2f2020%2f04%2flinux_host%2f&amp;appkey=&amp;title=Linux%20%e9%9b%86%e7%be%a4%e5%85%8d%e5%af%86%e7%99%bb%e5%bd%95%e9%85%8d%e7%bd%ae%2c%e5%8f%8c%e5%90%91%e5%85%8d%e5%af%86" target="_blank" title="Share on Douban ">
+            <i class="iconfont icon-weibo"></i>
+          </a>
+          
+</span>
+                
+            </p>
+
+
+            
+    </div>
+
+  
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-icon-tag"></i>: 
+            
+            <span class="tag"><a href="https://www.ipooli.com/tags/linux/">
+                    #linux</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">Back</a></span> · 
+                <span><a href="https://www.ipooli.com/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://www.ipooli.com/2020/04/bypass_ssl/" class="prev" rel="prev" title="https绕过证书认证请求 Get或Post请求（证书过期，忽略证书）"><i class="iconfont icon-dajiantou"></i>&nbsp;https绕过证书认证请求 Get或Post请求（证书过期，忽略证书）</a>
+         
+        
+        <a href="https://www.ipooli.com/2020/04/learn-kafka/" class="next" rel="next" title="kafka能做什么？kafka集群配置 (卡夫卡 大数据)">kafka能做什么？kafka集群配置 (卡夫卡 大数据)&nbsp;<i class="iconfont icon-xiaojiantou"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+          <span id="/2020/04/linux_host/" class="leancloud_visitors" data-flag-title="Linux 集群免密登录配置,双向免密">
+            <span class="post-meta-item-text"> Visitors: </span>
+            <span class="leancloud-visitors-count">0</span>
+            <p></p>
+        </span><div id="vcomments"></div>
+
+        
+        <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+        
+        <script src="//unpkg.com/valine"></script>
+        <script type="text/javascript">
+            new Valine({
+                el: '#vcomments',
+                lang: "en",
+                appId: "5w7gViIsG10OukLXFz7nxqic-gzGzoHsz",
+                appKey: "b5PvlK1CsivGIFOUGt13bzQS",
+                notify:  false ,
+                verify:  false ,
+                avatar: "mm",
+                placeholder: "欢迎提出问题.....",
+                visitor:  true ,
+            });
+        </script>
+
+ 
+
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2020 - 2021</span>
+        
+         
+            <span class="author" itemprop="copyrightHolder" style="font-weight: bold;"><a href="https://www.ipooli.com/">ipoo</a> | </span>
+         
+
+		  <span><img src="https://oss.ipooli.com/images/blog/beian.png"> 浙公网安备 33010502006127号 &nbsp&nbsp</span>
+            
+         ❤️ <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener noreffer">浙ICP备20009038号</a>
+         
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <link crossorigin="anonymous" integrity="sha384-yziQACfvCVwLqVFLqkWBYRO3XeA4EqzfXKGwaWnenYn5XzqfJFlFdKEmvutIQdKb" href="https://lib.baomitu.com/lightgallery/1.6.12/css/lightgallery.min.css" rel="stylesheet">
+      
+     <script src="/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+
+
+
+     </div>
+  </body>
+</html>

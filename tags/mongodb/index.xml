@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mongoDb on Ipoo</title>
+    <link>https://www.ipooli.com/tags/mongodb/</link>
+    <description>Recent content in mongoDb on Ipoo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 27 Apr 2020 15:08:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://www.ipooli.com/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>被删库&#39;勒索&#39;警醒事件</title>
+      <link>https://www.ipooli.com/2020/04/rm-mongo/</link>
+      <pubDate>Mon, 27 Apr 2020 15:08:00 +0800</pubDate>
+      
+      <guid>https://www.ipooli.com/2020/04/rm-mongo/</guid>
+      <description>因为需要,去访问数据库获取数据的时候,才发现数据库的表全没了！！ 去服务器上查找问题,发现服务还是正常的,没什么异常。 数据库缺莫名多了个库 READ_ME_TO_RECOVER_YOUR_DATA 库</description>
+    </item>
+    
+  </channel>
+</rss>
